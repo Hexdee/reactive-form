@@ -58,9 +58,6 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.isLoading) {
-      return
-    }
     this.isLoading = true;
     this.submitted = true;
     if (this.myForm.valid) {

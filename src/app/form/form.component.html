@@ -50,7 +50,7 @@
                     <label>Country</label>
                     <sui-select formControlName="country" [suiSearch]="true" suiPlaceholder="Select Country" required
                         [suiError]="submitted && myForm.controls['country'].invalid"
-                        [suiOptions]="countries"></sui-select>
+                        [suiLoading]="!countries || countries.length == 0" [suiOptions]="countries"></sui-select>
                     <div *ngIf="submitted && myForm.controls['country'].errors?.['required']"
                         class="ui pointing red basic label error-message">
                         Please select a country!
