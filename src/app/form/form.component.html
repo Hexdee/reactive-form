@@ -1,0 +1,94 @@
+<div sui-container class="container">
+    <header>
+        <h1 sui-header class="header">Reactive form</h1>
+    </header>
+    <main class="main">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" sui-form class="form">
+            <!-- Form fields -->
+
+            <div suiFormField class="form-field">
+                <label>Name</label>
+                <div suiFormFields suiWidth="two">
+                    <div suiFormField>
+                        <input formControlName="firstName" type="text" name="firstName" placeholder="First Name"
+                            required>
+                        <div *ngIf="(submitted || myForm.controls['firstName'].touched) && myForm.controls['firstName'].errors?.['required']"
+                            class="ui pointing red basic label error-message">
+                            First Name is required.
+                        </div>
+                    </div>
+                    <div suiFormField>
+                        <input formControlName="lastName" type="text" name="lastName" placeholder="Last Name" required>
+                        <div *ngIf="(submitted || myForm.controls['lastName'].touched) && myForm.controls['lastName'].errors?.['required']"
+                            class="ui pointing red basic label error-message">
+                            Last Name is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div suiFormField class="form-field">
+                <label>E-mail</label>
+                <input formControlName="email" type="email" name="email" placeholder="john@doe.com" required>
+                <div *ngIf="myForm.get('email')?.invalid && (submitted || myForm.get('email')?.touched)"
+                    class="ui pointing red basic label error-message">
+                    Please enter a valid email address.
+                </div>
+            </div>
+
+            <div suiFormField class="form-field">
+                <label>Phone number</label>
+                <input formControlName="phoneNumber" type="number" name="phoneNumber" placeholder="+123-5435-5433">
+                <div *ngIf="(submitted || myForm.controls['phoneNumber'].touched) && myForm.controls['phoneNumber'].errors?.['required']"
+                    class="ui pointing red basic label error-message">
+                    Phone number is required
+                </div>
+            </div>
+
+            <div suiFormFields suiWidth="two" class="form-field">
+                <div suiFormField>
+                    <label>Country</label>
+                    <sui-select formControlName="country" [suiSearch]="true" suiPlaceholder="Select Country" required
+                        [suiError]="submitted && myForm.controls['country'].invalid"
+                        [suiOptions]="countries"></sui-select>
+                    <div *ngIf="submitted && myForm.controls['country'].errors?.['required']"
+                        class="ui pointing red basic label error-message">
+                        Please select a country!
+                    </div>
+                </div>
+                <div suiFormField>
+                    <label>Occupation</label>
+                    <sui-select formControlName="occupation" [suiSearch]="true" suiPlaceholder="Select Occupation"
+                        [suiError]="submitted && myForm.controls['occupation'].invalid" required
+                        [suiOptions]="occupations" class="selection"></sui-select>
+                    <div *ngIf="submitted && myForm.controls['occupation'].errors?.['required']"
+                        class="ui pointing red basic label error-message">
+                        Please select an occupation!
+                    </div>
+                </div>
+            </div>
+
+            <div suiFormField class="form-field radio-field">
+                <label>Successful</label>
+                <div class="ui radio checkbox">
+                    <input type="radio" formControlName="successful" value="true">
+                    <label>True</label>
+                </div>
+            </div>
+            <div suiFormField class="form-field radio-field">
+                <div class="ui radio checkbox">
+                    <input type="radio" formControlName="successful" value="false">
+                    <label>False</label>
+                </div>
+            </div>
+
+            <button sui-button [suiLoading]="isLoading" [disabled]="isLoading" type="submit"
+                class="submit-button">Submit</button>
+        </form>
+    </main>
+    <footer class="footer">
+        <div class="footer-text">
+            ReactiveForm &copy;2023
+        </div>
+    </footer>
+</div>
