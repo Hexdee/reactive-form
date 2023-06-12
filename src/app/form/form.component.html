@@ -36,6 +36,24 @@
                 </div>
             </div>
 
+            <div suiFormField>
+                <label>Password</label>
+                <input formControlName="password" type="password" name="password" placeholder="Enter Password" required>
+                <div *ngIf="myForm.get('password')?.invalid && (submitted || myForm.get('password')?.touched)"
+                    class="ui pointing red basic label">
+                    Password must contain:
+                    <ul>
+                        <li *ngIf="myForm.get('password')?.errors?.['minLength']">at least 8 characters</li>
+                        <li *ngIf="myForm.get('password')?.errors?.['upperCase']">1 uppercase letter</li>
+                        <li *ngIf="myForm.get('password')?.errors?.['specialChar']">1 special character</li>
+                    </ul>
+                    <!-- <br />
+                    <span *ngIf="myForm.get('password')?.errors?.['minLength']">at least 8 characters</span><br />
+                    <span *ngIf="myForm.get('password')?.errors?.['upperCase']">1 uppercase letter</span><br />
+                    <span *ngIf="myForm.get('password')?.errors?.['specialChar']">1 special character</span> -->
+                </div>
+            </div>
+
             <div suiFormField class="form-field">
                 <label>Phone number</label>
                 <input formControlName="phoneNumber" type="number" name="phoneNumber" placeholder="+123-5435-5433">

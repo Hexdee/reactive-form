@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ISelectOption } from 'ngx-semantic/modules/select';
 import { CountryService } from '../services/country.service';
 import { NotificationService } from '../services/notification.service';
@@ -39,6 +39,7 @@ export class FormComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, this.passwordValidator]],
       phoneNumber: ['', [Validators.required]],
       country: ['', [Validators.required]],
       occupation: ['', [Validators.required]],
@@ -55,6 +56,33 @@ export class FormComponent implements OnInit {
         console.error('Error fetching countries:', error);
       }
     );
+  }
+
+  passwordValidator(control: AbstractControl): ValidationErrors | null {
+    const value: string = control.value;
+    const upperCasePattern = /[A-Z]/;
+    const specialCharPattern = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+    let minLength = false;
+    let upperCase = false;
+    let specialChar = false;
+
+    // Check for errors
+    if (!value || value.length < 8) {
+      minLength = true;
+    }
+    if (!upperCasePattern.test(value)) {
+      upperCase = true;
+    }
+
+    if (!specialCharPattern.test(value)) {
+      specialChar = true;
+    }
+
+    // Return errors if any error
+    if (minLength || upperCase || specialChar) {
+      return { minLength, upperCase, specialChar }
+    }
+    return null;
   }
 
   onSubmit() {
